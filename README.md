@@ -1,8 +1,15 @@
 # Loan default: from raw data to a tuned classifier
 
-Which borrowers won't pay back? This project takes 50,390 loans with 23 raw fields, cleans
-them, works out which attributes actually relate to default, and trains a Random Forest
-that flags defaulters with a tunable decision threshold.
+A notebook that takes 50,390 loans with 23 raw fields, cleans them, explores which
+attributes relate to default, and ends with a tuned Random Forest and a decision threshold
+picked from the precision-recall curve.
+
+**Status:** finished
+
+## Why I built it
+
+I wanted to run one credit-risk problem end to end: messy data in, a model a lender could
+use out, with the threshold treated as a business choice.
 
 **[Read the notebook on nbviewer](https://nbviewer.org/github/jvitorcosta/loan-EDA-python/blob/main/loan_case.ipynb)**
 (no Jupyter needed). The notebook and its comments are in Portuguese; this page summarises
@@ -12,6 +19,15 @@ it in English.
   <img src="docs/images/precision-recall-vs-threshold.png" width="720"
        alt="Precision and recall of the tuned model as the decision threshold moves from 0 to 1">
 </p>
+
+## Quick start
+
+```sh
+uv run --with pandas --with numpy --with scikit-learn --with matplotlib --with seaborn --with joblib --with jupyter jupyter lab loan_case.ipynb
+```
+
+Run it from the repo folder so it finds `dados.xls`. The tuning step is a 200-fit search, so
+it takes a while. The notebook is in Portuguese.
 
 ## Results
 
@@ -30,7 +46,7 @@ says little; the numbers that matter are for the **default** class.
   raises the precision of "will pay" predictions from 0.937 to 0.959, so fewer bad loans
   get approved. The chart above is what you'd hand a credit team to pick their point.
 
-## How it was done
+## How it works
 
 1. **Data understanding.** Every field documented and the dataset made consistent (types,
    column names, encodings).
@@ -65,7 +81,12 @@ says little; the numbers that matter are for the **default** class.
 
 - `loan_case.ipynb`: the analysis and model
 - `loan_case.html`: the same notebook, rendered
-- `dados.xls`, `descricao_dados.xlsx`: the data and its field descriptions
+- `dados.xls`, `descricao_dados.xlsx`: the data and its field descriptions (`dados.xls` is
+  actually comma-separated text, and the notebook reads it that way)
 - `docs/images/`: charts exported from the notebook
 
 **Stack:** Python, pandas, scikit-learn, Matplotlib, Seaborn, Jupyter
+
+## License
+
+MIT, see [LICENSE](LICENSE).
